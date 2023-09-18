@@ -133,6 +133,8 @@ class HBNBCommand(cmd.Cmd):
 
             if type(value) is str:
                 value = value.replace("_", " ")
+                value = value.strip('"')
+                value = value.replace("\\", "")
 
             try:
                 value = eval(value)
