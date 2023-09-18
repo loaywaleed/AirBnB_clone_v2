@@ -131,17 +131,13 @@ class HBNBCommand(cmd.Cmd):
                 key = key_value_items[0]
                 value = key_value_items[1]
 
-            if type(value) is str:
+            if hasattr(new_instance, key) is True:
                 value = value.replace("_", " ")
-                value = value.strip('"')
-                value = value.replace("\\", "")
-
-            try:
-                value = eval(value)
-            except (NameError, SyntaxError):
-                pass
-
-            setattr(new_instance, key, value)
+                try:
+                    value = eval(value)
+                except:
+                    pass
+                setattr(new_instance, key, value)
 
         """end"""
         storage.save()
