@@ -1,5 +1,5 @@
-#!/usr/bin/mysql
-
+-- setting up MySQL database for the project
+-- create database and user
 CREATE DATABASE IF NOT EXISTS hbnb_dev_db;
 CREATE USER IF NOT EXISTS 'hbnb_dev'@'localhost' IDENTIFIED BY 'hbnb_dev_pwd';
 
