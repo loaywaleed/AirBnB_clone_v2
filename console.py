@@ -138,6 +138,8 @@ class HBNBCommand(cmd.Cmd):
                     except (ValueError):
                         value = value.replace("_", " ")
                 setattr(new_instance, key, value)
+            else:
+                pass
         storage.save()
         print(new_instance.id)
         storage.save()
