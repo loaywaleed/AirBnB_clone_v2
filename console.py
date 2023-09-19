@@ -130,11 +130,15 @@ class HBNBCommand(cmd.Cmd):
             if len(key_value_items) == 2:
                 key = key_value_items[0]
                 value = key_value_items[1]
+
                 try:
                     value = int(value)
                 except (ValueError):
-                    value = value.repace("_", " ")
+                    value = value.replace("_", " ")
+                    pass
                 setattr(new_instance, key, value)
+
+        """end"""
         new_instance.save()
         print(new_instance.id)
         storage.save()
