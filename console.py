@@ -130,17 +130,12 @@ class HBNBCommand(cmd.Cmd):
             if len(key_value_items) == 2:
                 key = key_value_items[0]
                 value = key_value_items[1]
-
-            if hasattr(new_instance, key) is True:
-                value = value.replace("_", " ")
                 try:
-                    value = eval(value)
-                except (NameError, TypeError, ValueError):
-                    pass
+                    value = int(value)
+                except (ValueError):
+                    value = value.repace("_", " ")
                 setattr(new_instance, key, value)
-
-        """end"""
-        storage.save()
+        new_instance.save()
         print(new_instance.id)
         storage.save()
 
