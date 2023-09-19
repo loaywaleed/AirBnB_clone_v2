@@ -133,10 +133,7 @@ class HBNBCommand(cmd.Cmd):
                 try:
                     value = int(value)
                 except (ValueError):
-                    try:
-                        value = float(value)
-                    except (ValueError):
-                        value = value.replace("_", " ")
+                    value = value.replace("_", " ")
                 setattr(new_instance, key, value)
             else:
                 pass
