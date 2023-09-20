@@ -14,7 +14,7 @@ class FileStorage:
             filter = {}
             for key, value in self.__objects.items():
                 if type(value) is cls:
-                    setattr(filter, key, value)
+                    filter[key] = value
             return filter
         return FileStorage.__objects
 
