@@ -40,8 +40,8 @@ class DBStorage:
         """querying all db objects or a specific class if needed"""
         new_dict = {}
         if cls is None:
-            for clas in classes:
-                objs = self.__session.query(classes[clas]).all()
+            for clas in classes.values():
+                objs = self.__session.query(clas).all()
         else:
             objs = self.__session.query(cls).all()
 

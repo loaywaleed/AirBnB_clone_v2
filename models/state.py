@@ -16,7 +16,6 @@ class State(BaseModel, Base):
                               cascade='all, delete, delete-orphan')
     else:
         name = ""
-        cities = ""
 
     if type_storage != "db":
         @property
