@@ -5,14 +5,12 @@ from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from models import type_storage
 from sqlalchemy.orm import relationship
 from models.review import Review
-from models.amenity import Amenity
 
-if type_storage == 'db':
-    place_amenity = Table('place_amenity', Base.metadata,
-                          Column("place_id", String(60), ForeignKey(
-                              'places.id'), nullable=False),
-                          Column("amenity_id", String(60), ForeignKey(
-                              'amenities.id'), nullable=False))
+place_amenity = Table('place_amenity', Base.metadata,
+                      Column("place_id", String(60), ForeignKey(
+                          'places.id'), primary_key=True, nullable=False),
+                      Column("amenity_id", String(60), ForeignKey(
+                          'amenities.id'), primary_key=True, nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -32,7 +30,7 @@ class Place(BaseModel, Base):
         reviews = relationship('Review', backref='place',
                                cascade="all, delete, delete-orphan")
         amenities = relationship(
-            "Amenity", secondary="place_amenity", viewonly=False)
+            "Amenity", secondary=place_amenity, viewonly=False)
         amenity_ids = []
 
     else:
@@ -62,6 +60,7 @@ class Place(BaseModel, Base):
     def amenities(self):
         """Getter attribute for amenities"""
         from models import storage
+        from models.amenity import Amenity
         lst_of_amenities = []
         all_amenities = storage.all(Amenity)
         for amenity in all_amenities:
@@ -72,5 +71,6 @@ class Place(BaseModel, Base):
     @amenities.setter
     def amenities(self, obj):
         """Setter attribute for amenities"""
+        from models.amenity import Amenity
         if isinstance(obj, Amenity):
             self.amenity_ids.append(obj.id)
