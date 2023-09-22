@@ -73,5 +73,7 @@ class Place(BaseModel, Base):
     def amenities(self, obj):
         """Setter attribute for amenities"""
         from models.amenity import Amenity
-        if isinstance(obj, Amenity):
-            self.amenity_ids.append(obj.id)
+        if obj is not None:
+            if isinstance(obj, Amenity):
+                if obj.id not in self.amenity_ids:
+                    self.amenity_ids.append(obj.id)

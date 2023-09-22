@@ -4,7 +4,6 @@ from models.base_model import BaseModel, Base
 from models import type_storage
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-from models.place import Place
 
 
 class User(BaseModel, Base):
