@@ -7,10 +7,10 @@ import models
 
 class City(BaseModel, Base):
     """ City class that models a city """
-    __tablename__ = "cities"
     if models.type_storage == "db":
-        state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
+        __tablename__ = 'cities'
         name = Column(String(128), nullable=False)
+        state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
     else:
-        state_id = ""
         name = ""
+        state_id = ""
