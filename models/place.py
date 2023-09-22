@@ -6,11 +6,12 @@ from models import type_storage
 from sqlalchemy.orm import relationship
 from models.review import Review
 
-place_amenity = Table('place_amenity', Base.metadata,
-                      Column("place_id", String(60), ForeignKey(
-                          'places.id'), primary_key=True, nullable=False),
-                      Column("amenity_id", String(60), ForeignKey(
-                          'amenities.id'), primary_key=True, nullable=False))
+if type_storage == 'db':
+    place_amenity = Table('place_amenity', Base.metadata,
+                          Column("place_id", String(60), ForeignKey(
+                              'places.id'), primary_key=True, nullable=False),
+                          Column("amenity_id", String(60), ForeignKey(
+                              'amenities.id'), primary_key=True, nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -30,8 +31,8 @@ class Place(BaseModel, Base):
         reviews = relationship('Review', backref='place',
                                cascade="all, delete, delete-orphan")
         amenities = relationship(
-            "Amenity", secondary=place_amenity, viewonly=False)
-        amenity_ids = []
+            "Amenity", secondary=place_amenity, viewonly=False,
+            backref='place_amenities')
 
     else:
         city_id = ""
@@ -48,10 +49,11 @@ class Place(BaseModel, Base):
 
     @property
     def reviews(self):
+        """Getter for reviews"""
         from models import storage
         lst = []
         all_reviews = storage.all(Review)
-        for review in all_reviews:
+        for review in all_reviews.values():
             if self.id == review.place_id:
                 lst.append(review)
         return lst
@@ -63,7 +65,7 @@ class Place(BaseModel, Base):
         from models.amenity import Amenity
         lst_of_amenities = []
         all_amenities = storage.all(Amenity)
-        for amenity in all_amenities:
+        for amenity in all_amenities.values():
             if self.id == amenity.id:
                 lst_of_amenities.append(amenity)
         return lst_of_amenities
