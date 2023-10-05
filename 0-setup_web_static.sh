@@ -10,7 +10,7 @@ mkdir data/web_static/shared/
 mkdir data/web_static/releases/test/
 echo "Holberton School" > /data/web_static/releases/test/index.html
 ln -sf /data/web_static/releases/test/ /data/web_static/current
-chown $USER:$USER data
+chown "$USER":"$USER" data
 
 printf %s "server {
     listen 80 default_server;
