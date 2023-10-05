@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
-# setting up web servers for deployment
-sudo apt-get -y update
-sudo apt-get install -y nginx
+# Setting up web server
 
-mkdir data/
-mkdir data/web_static/
-mkdir data/web_static/releases/
-mkdir data/web_static/shared/
-mkdir data/web_static/releases/test/
+apt-get -y update
+apt-get install -y nginx
+
+mkdir -p /data/web_static/releases/test/
+mkdir -p /data/web_static/shared/
 echo "Holberton School" > /data/web_static/releases/test/index.html
 ln -sf /data/web_static/releases/test/ /data/web_static/current
-chown "$USER":"$USER" data
+
+chown -R ubuntu /data/
+chgrp -R ubuntu /data/
 
 printf %s "server {
     listen 80 default_server;
@@ -25,7 +25,7 @@ printf %s "server {
     }
 
     location /redirect_me {
-        return 301 https://www.linkedin.com/in/loay-waleed-87b88a197/;
+        return 301 http://https://github.com/loaywaleed/;
     }
 
     error_page 404 /404.html;
