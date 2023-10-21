@@ -30,8 +30,7 @@ def pythoniscool(text="is cool"):
     return 'Python ' + text.replace('_', ' ')
 
 
-@app.route('/number', strict_slashes=False)
-@app.route('/number/<n>', strict_slashes=False)
+@app.route('/number/<n:int>', strict_slashes=False)
 def pythoniscool(n):
     """returns python and name of route"""
     if n is int:
