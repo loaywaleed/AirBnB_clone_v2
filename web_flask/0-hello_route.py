@@ -1,7 +1,8 @@
 #!/usr/bin/python3
+"""Module that initiates flask"""
+
 from flask import Flask
 app = Flask(__name__)
-"""Initiating flask"""
 
 
 @app.route('/', strict_slashes=False)
