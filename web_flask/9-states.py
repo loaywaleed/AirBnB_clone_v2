@@ -19,14 +19,14 @@ def states_list():
 def states(id=None):
     """ Route function for /states and /states/<id> """
     state_not_found = False
-    if id:
-        states = storage.all(State)
-        id_exists = False
-    else:
+    if id is not None:
         states = storage.all(State, id)
         id_exists = True
         if len(states) == 0:
             state_not_found = True
+    else:
+        states = storage.all(State)
+        id_exists = False
     return render_template('9-states.html', states=states,
                            id_exists=id_exists, state_not_found=state_not_found)
 
