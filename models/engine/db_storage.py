@@ -36,22 +36,44 @@ class DBStorage:
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
-    def all(self, cls=None):
-        """querying all db objects or a specific class if needed"""
-        new_dict = {}
-        if cls is None:
-            for clas in classes.values():
-                objs = self.__session.query(clas).all()
-        else:
-            objs = self.__session.query(cls).all()
+    def all(self, cls=None, id=None):
+        """
+        Query all classes or specific one by ID
+        """
+        allClasses = [User, Place, State, City, Amenity, Review]
+        result = {}
 
-        for obj in objs:
-            new_dict[obj.__class__.__name__ + '.' + obj.id] = obj
-        return new_dict
+        if cls is not None:
+            if id is not None:
+                obj = self.__session.query(cls).get(id)
+                if obj is not None:
+                    ClassName = obj.__class__.__name__
+                    keyName = ClassName + "." + str(obj.id)
+                    result[keyName] = obj
+            else:
+                for obj in self.__session.query(cls).all():
+                    ClassName = obj.__class__.__name__
+                    keyName = ClassName + "." + str(obj.id)
+                    result[keyName] = obj
+        else:
+            for clss in allClasses:
+                if id is not None:
+                    obj = self.__session.query(clss).get(id)
+                    if obj is not None:
+                        ClassName = obj.__class__.__name__
+                        keyName = ClassName + "." + str(obj.id)
+                        result[keyName] = obj
+                else:
+                    for obj in self.__session.query(clss).all():
+                        ClassName = obj.__class__.__name__
+                        keyName = ClassName + "." + str(obj.id)
+                        result[keyName] = obj
+        return result
 
     def new(self, obj):
         """add the object to current database session"""
-        self.__session.add(obj)
+        if obj:
+            self.__session.add(obj)
 
     def save(self):
         """Commits sessions changes"""
