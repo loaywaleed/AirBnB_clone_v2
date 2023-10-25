@@ -28,7 +28,8 @@ def states(id=None):
         states = storage.all(State)
         id_exists = False
     return render_template('9-states.html', states=states,
-                           id_exists=id_exists, state_not_found=state_not_found)
+                           id_exists=id_exists,
+                           state_not_found=state_not_found)
 
 
 @app.teardown_appcontext
